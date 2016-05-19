@@ -6,6 +6,7 @@
         <link rel="stylesheet" type="text/css" href="css/main.css" />
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/shape.css">
+        <link rel="stylesheet" href="css/border.css">
         <!--material css-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
@@ -54,10 +55,16 @@
             <canvas class="canvas"></canvas>
             <div class="help"></div>
 
-            <div id="userDiv" class="ui center">
+            <div id="userDiv" class="container ui center">
                 <div id="userImageDiv" class="user">
-                    <img id="dragon-purple" src="images/dragon-purple.png"/>
-                    <img id="dragon-green" src="images/dragon-green.png"/>
+                    <span>
+                        <img id="dragon-purple" class="" src="images/dragon-purple.png"/>
+                    </span>
+                    <span>
+                        <img id="dragon-green" src="images/dragon-green.png"/>
+                    </span>
+                    <span id="selectImg" class="bb">
+                    </span>
                 </div>
 
                 <div id="userNameDiv" class="user">
@@ -65,7 +72,7 @@
                     <a id="startBtn" class="blue darken-3 waves-effect waves-light btn">Start</a>
                 </div>
 
-                <div id="nextBtnDiv" class="center">
+                <div id="nextBtnDiv" class="user center">
                     <a id="nextBtn" class="blue darken-3 waves-effect waves-light btn">Next</a>
                 </div>
             </div>

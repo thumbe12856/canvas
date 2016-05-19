@@ -18,7 +18,7 @@ var S = {
   init: function () {
     setTimeout(function() {
       $('#userImageDiv').fadeIn();
-    }, 9000);
+    }, 14000);
     var action = window.location.href,
         i = action.indexOf('?a=');
 
@@ -28,8 +28,7 @@ var S = {
     if (i !== -1) {
       S.UI.simulate(decodeURI(action).substring(i + 3));
     } else {
-      //S.UI.simulate('Please|Type|Your|Name|#rectangle||');
-      S.UI.simulate('Please|Select|Your|Player||');
+      S.UI.simulate('Select|Your|Player||');
     }
 
     S.Drawing.loop(function () {
@@ -216,7 +215,7 @@ S.UI = (function () {
         default:
           S.Shape.switchShape(S.ShapeBuilder.letter(current[0] === cmd ? 'What?' : current));
       }
-    }, 2000, sequence.length);
+    }, 2500, sequence.length);
   }
 
   function checkInputWidth(e) {
@@ -239,21 +238,23 @@ S.UI = (function () {
       if(step == 1) {
         $('#userImageDiv').fadeOut();
         $('#nextBtnDiv').fadeOut();
-        performAction('Please|Type|Your|Name|#rectangle||');
+        performAction('Type|Your|Name|#rectangle||');
         setTimeout(function() {
           $('#userNameDiv').fadeIn();
-        }, 11000);
+        //}, 11000);
+        }, 14000);
       }
     });
 
+    var data = [];
+    data['dragon-purple'] = 'images/dragon-purple.png';
+    data['dragon-green'] = 'images/dragon-green.png';
     $('#userImageDiv img').on('click', function(){
       $('#nextBtnDiv').fadeIn();
-      var data = [];
-      data['dragon-purple'] = 'images/dragon-purple.png';
-      data['dragon-green'] = 'images/dragon-green.png';
 
       var id = $(this).attr('id');
       dragonImg = data[id];
+      $('#selectImg').css('background', 'url("'+dragonImg +'")  no-repeat 50%/70%').addClass('bb');
       console.log(dragonImg);
     });
 
@@ -265,13 +266,13 @@ S.UI = (function () {
       reset();
       performAction(input.value);
       setTimeout(function() {
-        performAction('#countdown');
+        performAction('#countdown 5');
         setTimeout(function() {
           $('#playground').css('display', 'block');
           $('#userInfo').css('display', 'none');
           gameStart = true;
           start();
-        }, 11000);
+        }, 7000);
       }, 4000);
 
       /*setTimeout(function() {
