@@ -10,12 +10,6 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
 
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-
         <style>
             /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
             html, body, .containerr{
@@ -60,10 +54,22 @@
             <canvas class="canvas"></canvas>
             <div class="help"></div>
 
-            <div id="userNameDiv" class="ui center">
-                <input id="userName" class="ui-input" type="text"/>
-                <a id="startBtn" class="blue darken-3 waves-effect waves-light btn">Start</a>
+            <div id="userDiv" class="ui center">
+                <div id="userImageDiv" class="user">
+                    <img id="dragon-purple" src="images/dragon-purple.png"/>
+                    <img id="dragon-green" src="images/dragon-green.png"/>
+                </div>
+
+                <div id="userNameDiv" class="user">
+                    <input id="userName" class="ui-input" type="text"/>
+                    <a id="startBtn" class="blue darken-3 waves-effect waves-light btn">Start</a>
+                </div>
+
+                <div id="nextBtnDiv" class="center">
+                    <a id="nextBtn" class="blue darken-3 waves-effect waves-light btn">Next</a>
+                </div>
             </div>
+
 
             <div class="overlay">
                 <div class="tabs">
@@ -113,6 +119,4 @@
     <script src="js/script.js"></script>
     <script src="js/dragImg.js"></script>
     <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </html>

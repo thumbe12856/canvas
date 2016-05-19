@@ -199,7 +199,7 @@ $(function(){
     $('#pauseBtn').on('click', function(){
         if(life > 0) gameStart = !gameStart;
     });
-    testStart();
+    //testStart();
 });
 
 function start()
@@ -258,7 +258,8 @@ function start()
     // initialization of dragon
     var oDragonImage = new Image();
     oDragonImage.id = 'dragon';
-    oDragonImage.src = 'images/dragon-purple.png';
+    //oDragonImage.src = 'images/dragon-purple.png';
+    oDragonImage.src = dragonImg;
 
     oDragonImage.onload = function() {
         dragon = new Dragon(400, 300, dragonW, dragonH, oDragonImage);

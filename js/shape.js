@@ -1,4 +1,6 @@
-
+var step = 0;
+var userName = '';
+var dragonImg = '';
 /*
 
  Shape Shifter
@@ -15,8 +17,8 @@
 var S = {
   init: function () {
     setTimeout(function() {
-      $('#userNameDiv').fadeIn();
-    }, 11000);
+      $('#userImageDiv').fadeIn();
+    }, 9000);
     var action = window.location.href,
         i = action.indexOf('?a=');
 
@@ -26,7 +28,8 @@ var S = {
     if (i !== -1) {
       S.UI.simulate(decodeURI(action).substring(i + 3));
     } else {
-      S.UI.simulate('Please|Type|Your|Name|#rectangle||');
+      //S.UI.simulate('Please|Type|Your|Name|#rectangle||');
+      S.UI.simulate('Please|Select|Your|Player||');
     }
 
     S.Drawing.loop(function () {
@@ -231,7 +234,31 @@ S.UI = (function () {
   }
 
   function bindEvents() {
+    $('#nextBtn').on('click', function(){
+      step++;
+      if(step == 1) {
+        $('#userImageDiv').fadeOut();
+        $('#nextBtnDiv').fadeOut();
+        performAction('Please|Type|Your|Name|#rectangle||');
+        setTimeout(function() {
+          $('#userNameDiv').fadeIn();
+        }, 11000);
+      }
+    });
+
+    $('#userImageDiv img').on('click', function(){
+      $('#nextBtnDiv').fadeIn();
+      var data = [];
+      data['dragon-purple'] = 'images/dragon-purple.png';
+      data['dragon-green'] = 'images/dragon-green.png';
+
+      var id = $(this).attr('id');
+      dragonImg = data[id];
+      console.log(dragonImg);
+    });
+
     $('#startBtn').on('click', function(){
+      userName = $('#userName').val();
       $(this).parent().fadeOut();
       $('#userNameDiv').fadeOut();
       firstAction = false;
@@ -239,13 +266,17 @@ S.UI = (function () {
       performAction(input.value);
       setTimeout(function() {
         performAction('#countdown');
+        setTimeout(function() {
+          $('#playground').css('display', 'block');
+          $('#userInfo').css('display', 'none');
+          gameStart = true;
+          start();
+        }, 11000);
       }, 4000);
-      setTimeout(function() {
-        $('#playground').css('display', 'block');
-        $('#userInfo').css('display', 'none');
-        gameStart = true;
-        start();
-      }, 15000);
+
+      /*setTimeout(function() {
+        performAction('#countdown');
+      }, 4000);*/
     });
     /*document.body.addEventListener('keydown', function (e) {
       input.focus();

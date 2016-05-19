@@ -327,7 +327,13 @@ body,
   display: none;
 }
 
-#userNameDiv {
+#nextBtnDiv {
+  display: none;
+}
+
+#userDiv .user{
   top: 500px;
   display: none;
 }
+
+
