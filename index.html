@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <head>
+        <meta charset="utf-8" />
+        <title>HTML5 Game Development - Lesson 9 | Script Tutorials</title>
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/shape.css">
+        <!--material css-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+
+        <style>
+            /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+            html, body, .containerr{
+                width: 100%;
+                height: 100%;
+                min-width: 500px;
+                min-height: 500px;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+            #background {
+                position: absolute;
+                top: 0;
+                background-color: #007ced;
+                background: linear-gradient(to bottom, #007ced 1%,#cce7ff 100%);
+            }
+            #cloud-intro{
+                position: relative;
+                height: 100%;
+                background: url(http://static.radulescu.me/examples/clouds/clouds1000.png);
+                background: url(http://static.radulescu.me/examples/clouds/clouds1000.png) 0 200px,
+                url(http://static.radulescu.me/examples/clouds/clouds1200_1.png) 0 300px,
+                url(http://static.radulescu.me/examples/clouds/clouds1000_blur3.png) 100px 250px;
+                animation: wind 20s linear infinite;
+            }
+            @keyframes wind{
+                0% {
+                    background-position: 0 200px, 0 300px, 100px 250px;
+                }
+                100% {
+                    background-position: 1000px 200px, 1200px 300px, 1100px 250px;
+                }
+
+            }
+        </style>
+    </head>
+
+    <body id="main">
+
+        <div id="userInfo">
+            <canvas class="canvas"></canvas>
+            <div class="help"></div>
+
+            <div id="userNameDiv" class="ui center">
+                <input id="userName" class="ui-input" type="text"/>
+                <a id="startBtn" class="blue darken-3 waves-effect waves-light btn">Start</a>
+            </div>
+
+            <div class="overlay">
+                <div class="tabs">
+                    <div class="tabs-labels"><span class="tabs-label">Commands</span><span class="tabs-label">Info</span><span class="tabs-label">Share</span></div>
+                    <div class="tabs-panels">
+                        <ul class="tabs-panel commands">
+                            <li class="commands-item"><span class="commands-item-title">Text</span><span class="commands-item-info" data-demo="Hello :)">Type anything</span><span class="commands-item-action">Demo</span></li>
+                            <li class="commands-item"><span class="commands-item-title">Countdown</span><span class="commands-item-info" data-demo="#countdown 10">#countdown<span class="commands-item-mode">number</span></span><span class="commands-item-action">Demo</span></li>
+                            <li class="commands-item"><span class="commands-item-title">Time</span><span class="commands-item-info" data-demo="#time">#time</span><span class="commands-item-action">Demo</span></li>
+                            <li class="commands-item"><span class="commands-item-title">Rectangle</span><span class="commands-item-info" data-demo="#rectangle 30x15">#rectangle<span class="commands-item-mode">width x height</span></span><span class="commands-item-action">Demo</span></li>
+                            <li class="commands-item"><span class="commands-item-title">Circle</span><span class="commands-item-info" data-demo="#circle 25">#circle<span class="commands-item-mode">diameter</span></span><span class="commands-item-action">Demo</span></li>
+                            <li class="commands-item commands-item--gap"><span class="commands-item-title">Animate</span><span class="commands-item-info" data-demo="The time is|#time|#countdown 3|#icon thumbs-up"><span class="commands-item-mode">command1</span>&nbsp;|<span class="commands-item-mode">command2</span></span><span class="commands-item-action">Demo</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="playground">
+            <div id="background" class="containerr">
+                <div id="cloud-intro"></div>
+            </div>
+            <div id="userActionDiv" class="row">
+                <span class="right"><a id="pauseBtn" class="grey darken-3 waves-effect waves-light btn">Pause</a></span>
+            </div>
+            <div>
+                <canvas id="scene" width="1920" height="600" tabindex="1"></canvas>
+                <canvas id="defaultEnemy" width="700" height="600">I am canvas</canvas>
+                <div id="main-content"></div>
+            </div>
+            <div id="lifeProgressBarDiv" class="container">
+                <h2>Life: 1000/1000</h2>
+                <div class="progress">
+                    <div id="lifeProgressBar" class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" style="width:100%">100%</div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="js/shape.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/dragImg.js"></script>
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</html>
