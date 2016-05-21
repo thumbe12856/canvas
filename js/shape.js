@@ -1,24 +1,12 @@
 var step = 0;
 var userName = '';
 var dragonImg = '';
-/*
-
- Shape Shifter
- =============
- A canvas experiment by Kenneth Cachia
- http://www.kennethcachia.com
-
- Updated code
- ------------
- https://github.com/kennethcachia/Shape-Shifter
-
- */
 
 var S = {
   init: function () {
     setTimeout(function() {
       $('#userImageDiv').fadeIn();
-    }, 14000);
+    }, 10000);
     var action = window.location.href,
         i = action.indexOf('?a=');
 
@@ -28,7 +16,7 @@ var S = {
     if (i !== -1) {
       S.UI.simulate(decodeURI(action).substring(i + 3));
     } else {
-      S.UI.simulate('Select|Your|Player||');
+      S.UI.simulate('Select|Your|Dragon||');
     }
 
     S.Drawing.loop(function () {
@@ -241,21 +229,19 @@ S.UI = (function () {
         performAction('Type|Your|Name|#rectangle||');
         setTimeout(function() {
           $('#userNameDiv').fadeIn();
-        //}, 11000);
-        }, 14000);
+        }, 11000);
       }
     });
 
-    var data = [];
-    data['dragon-purple'] = 'images/dragon-purple.png';
-    data['dragon-green'] = 'images/dragon-green.png';
+
     $('#userImageDiv img').on('click', function(){
       $('#nextBtnDiv').fadeIn();
 
       var id = $(this).attr('id');
-      dragonImg = data[id];
+      dragonImg = $(this).attr('src');
+      $('#userImageDiv img').css('border', '0');
+      $(this).css('border', '5px dashed');
       $('#selectImg').css('background', 'url("'+dragonImg +'")  no-repeat 50%/70%').addClass('bb');
-      console.log(dragonImg);
     });
 
     $('#startBtn').on('click', function(){
@@ -275,22 +261,7 @@ S.UI = (function () {
         }, 7000);
       }, 4000);
 
-      /*setTimeout(function() {
-        performAction('#countdown');
-      }, 4000);*/
     });
-    /*document.body.addEventListener('keydown', function (e) {
-      input.focus();
-
-      if (e.keyCode === 13) {
-        firstAction = false;
-        reset();
-        performAction(input.value);
-        setTimeout(function() {
-          performAction('#countdown');
-        }, 4000);
-      }
-    });*/
 
     input.addEventListener('input', checkInputWidth);
     input.addEventListener('change', checkInputWidth);
@@ -298,7 +269,7 @@ S.UI = (function () {
 
     help.addEventListener('click', function (e) {
       overlay.classList.toggle('overlay--visible');
-      overlay.classList.contains('overlay--visible') && reset(true);
+      overlay.classList.contains('overlay--visible');// && reset(true);
     });
 
     commands.addEventListener('click', function (e) {
@@ -331,8 +302,6 @@ S.UI = (function () {
           } else {
             input.focus();
           }
-        } else if (url) {
-          //window.location = url;
         }
       }
     });
@@ -360,7 +329,7 @@ S.UI = (function () {
 
 
 S.UI.Tabs = (function () {
-  var tabs = document.querySelector('.tabs'),
+  var tabs = document.querySelector('.tabss'),
       labels = document.querySelector('.tabs-labels'),
       triggers = document.querySelectorAll('.tabs-label'),
       panels = document.querySelectorAll('.tabs-panel');
@@ -370,29 +339,10 @@ S.UI.Tabs = (function () {
     panels[i].classList.add('tabs-panel--active');
   }
 
-  function bindEvents() {
-    labels.addEventListener('click', function (e) {
-      var el = e.target,
-          index;
-
-      if (el.classList.contains('tabs-label')) {
-        for (var t = 0; t < triggers.length; t++) {
-          triggers[t].classList.remove('tabs-label--active');
-          panels[t].classList.remove('tabs-panel--active');
-
-          if (el === triggers[t]) {
-            index = t;
-          }
-        }
-
-        activate(index);
-      }
-    });
-  }
 
   function init() {
     activate(0);
-    bindEvents();
+    //bindEvents();
   }
 
   // Init
@@ -779,6 +729,8 @@ function testStart()
 {
   $('#playground').css('display', 'block');
   $('#userInfo').css('display', 'none');
+  dragonImg = 'images/dragon-purple.png';
+  userName = 'testStart';
   gameStart = true;
   start();
 }

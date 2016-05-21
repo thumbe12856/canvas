@@ -51,19 +51,46 @@
 
     <body id="main">
 
+    <div class="help">?</div>
+    <div class="overlay">
+        <div class="tabss">
+            <div class="tabs-labels"><span class="tabs-label">Rule</span></div>
+            <div class="tabs-panels">
+                <ul class="tabs-panel commands">
+                    <li class="commands-item"><span class="commands-item-title">Move</span><span class="commands-item-info">Up, Down, Left, Right</span></li>
+                    <li class="commands-item"><span class="commands-item-title">Attack</span><span class="commands-item-info">Press " f " to attack enemy</span></li>
+                    <li class="commands-item"><span class="commands-item-title">Points</span><span class="commands-item-info">1 enemy 10 points</span></li>
+                    <li class="commands-item"><span class="commands-item-title">Hurts</span><span class="commands-item-info">you will get 50 damage for each hurt</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
         <div id="userInfo">
             <canvas class="canvas"></canvas>
-            <div class="help"></div>
 
             <div id="userDiv" class="container ui center">
                 <div id="userImageDiv" class="user">
                     <span>
-                        <img id="dragon-purple" class="" src="images/dragon-purple.png"/>
+                        <img src="images/dragon-purple.png"/>
                     </span>
                     <span>
-                        <img id="dragon-green" src="images/dragon-green.png"/>
+                        <img src="images/dragon-green.png"/>
                     </span>
-                    <span id="selectImg" class="bb">
+                    <span>
+                        <img src="images/dragon-black.png"/>
+                    </span>
+                    <span>
+                        <img src="images/dragon-orange.gif"/>
+                    </span>
+                    <span>
+                        <img src="images/dragon-red.png"/>
+                    </span>
+                    <span>
+                        <img src="images/dragon-yellow.png"/>
+                    </span>
+
+                    <span id="selectImg" class="">
                     </span>
                 </div>
 
@@ -78,21 +105,20 @@
             </div>
 
 
-            <div class="overlay">
-                <div class="tabs">
-                    <div class="tabs-labels"><span class="tabs-label">Commands</span><span class="tabs-label">Info</span><span class="tabs-label">Share</span></div>
+            <!--<div class="overlay">
+                <div class="tabss">
+                    <div class="tabs-labels"><span class="tabs-label">Rule</span></div>
                     <div class="tabs-panels">
                         <ul class="tabs-panel commands">
-                            <li class="commands-item"><span class="commands-item-title">Text</span><span class="commands-item-info" data-demo="Hello :)">Type anything</span><span class="commands-item-action">Demo</span></li>
-                            <li class="commands-item"><span class="commands-item-title">Countdown</span><span class="commands-item-info" data-demo="#countdown 10">#countdown<span class="commands-item-mode">number</span></span><span class="commands-item-action">Demo</span></li>
-                            <li class="commands-item"><span class="commands-item-title">Time</span><span class="commands-item-info" data-demo="#time">#time</span><span class="commands-item-action">Demo</span></li>
-                            <li class="commands-item"><span class="commands-item-title">Rectangle</span><span class="commands-item-info" data-demo="#rectangle 30x15">#rectangle<span class="commands-item-mode">width x height</span></span><span class="commands-item-action">Demo</span></li>
-                            <li class="commands-item"><span class="commands-item-title">Circle</span><span class="commands-item-info" data-demo="#circle 25">#circle<span class="commands-item-mode">diameter</span></span><span class="commands-item-action">Demo</span></li>
-                            <li class="commands-item commands-item--gap"><span class="commands-item-title">Animate</span><span class="commands-item-info" data-demo="The time is|#time|#countdown 3|#icon thumbs-up"><span class="commands-item-mode">command1</span>&nbsp;|<span class="commands-item-mode">command2</span></span><span class="commands-item-action">Demo</span></li>
+                            <li class="commands-item"><span class="commands-item-title">Text</span><span class="commands-item-info" data-demo="Hello :)">Type anything</span></li>
+                            <li class="commands-item"><span class="commands-item-title">Text</span><span class="commands-item-info" data-demo="Hello :)">Type anything</span></li>
+                            <li class="commands-item"><span class="commands-item-title">Text</span><span class="commands-item-info" data-demo="Hello :)">Type anything</span></li>
+                            <li class="commands-item"><span class="commands-item-title">Text</span><span class="commands-item-info" data-demo="Hello :)">Type anything</span></li>
+
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
 
         <div id="playground">
@@ -100,7 +126,10 @@
                 <div id="cloud-intro"></div>
             </div>
             <div id="userActionDiv" class="row">
+                <h2 id="score" class="left">Score:</h2>
+                <h1 id="distance" class="center">1000km</h1>
                 <span class="right"><a id="pauseBtn" class="grey darken-3 waves-effect waves-light btn">Pause</a></span>
+                <span class="right"><a id="rankBtn" class="grey darken-3 waves-effect waves-light btn disabled modal-trigger" href="#rankModal">Rank</a></span>
             </div>
             <div>
                 <canvas id="scene" width="1920" height="600" tabindex="1"></canvas>
@@ -114,16 +143,31 @@
                 </div>
             </div>
         </div>
+
+        <!-- Rank Modal -->
+        <div id="rankModal" class="modal">
+            <div class="modal-content row">
+                <h1>You have score ? points.</h1>
+                <div class="row">
+                    <h4><span class="col s4">Rank</span><span class="col s4">Name</span><span class="col s4">Score</span></h4>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="restart" chref="#!" class=" modal-action modal-close waves-effect red btn">Restart the game</a>
+            </div>
+        </div>
+
     </body>
 
 
 
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.0/lodash.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-linkedin/2.7.2/dust-core.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
     <script src="js/shape.js"></script>
     <script src="js/script.js"></script>
     <script src="js/dragImg.js"></script>
-    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </html>

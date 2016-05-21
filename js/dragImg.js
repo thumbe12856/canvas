@@ -1,4 +1,3 @@
-//(function () {
 function DRAW() {
 
   var canvas = document.getElementById("defaultEnemy");

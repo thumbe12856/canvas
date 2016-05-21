@@ -46,7 +46,7 @@ header .stuts span {
     margin-left:5px;
 }
 #scene {
-    margin-top: 150px;
+    margin-top: 70px;
     display: block;
     position: relative;
     width: 1920px;
@@ -63,10 +63,17 @@ header .stuts span {
 
 #userActionDiv {
     position: relative;
-    top: 100px;
+    top: 20px;
+}
+#userActionDiv #score {
+    margin: 0 0 0 50px;
+    color: #E4FDE1;
 }
 #userActionDiv #pauseBtn {
     right: 50px;
+}
+#userActionDiv #rankBtn {
+    right: 100px;
 }
 
 #lifeProgressBarDiv {
@@ -75,7 +82,7 @@ header .stuts span {
 #lifeProgressBarDiv h2 {
     z-index: 9999;
     position: relative;
-    color: #8d6e63;
+    color: #b71c1c;
 }
 
 #lifeProgressBarDiv .progress {
@@ -110,4 +117,9 @@ header .stuts span {
     -webkit-transition: width .6s ease;
     -o-transition: width .6s ease;
     transition: width .6s ease;
+}
+
+
+#rankModal .modal-content{
+
 }

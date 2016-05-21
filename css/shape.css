@@ -69,7 +69,7 @@ body,
 
 .ui {
   position: absolute;
-  left: 25%;
+  left: 15%;
   bottom: 5%;
   width: 300px;
   margin-left: -150px;
@@ -120,16 +120,18 @@ body,
 }
 
 .help {
+  z-index: 9999;
   position: absolute;
-  top: 40px;
-  right: 40px;
-  width: 25px;
-  height: 25px;
+  top: 80px;
+  right: 80px;
+  width: 50px;
+  height: 50px;
   text-align: center;
-  font-size: 13px;
-  line-height: 27px;
+  font-size: 30px;
+  line-height: 54px;
   font-weight: bold;
   cursor: pointer;
+  background: #fff;
   color: #79a8ae;
   opacity: .9;
 
@@ -145,6 +147,7 @@ body,
 }
 
 .overlay {
+  z-index: 9999;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -283,7 +286,7 @@ body,
   display: inline-block;
   background: #fff;
   padding: 10px 20px;
-  font-size: 12px;
+  font-size: 24px;
   line-height: 22px;
   font-weight: bold;
   text-transform: uppercase;
@@ -306,6 +309,9 @@ body,
 
 .tabs-label--active {
   opacity: .9;
+}
+.tabs-panels ul li{
+  font-size: 20px;
 }
 
 .tabs-panel {
@@ -333,7 +339,8 @@ body,
 }
 
 #userDiv {
-  top: 600px;
+  top: 20%;
+  margin: 0;
 }
 #userDiv .user{
   display: none;
@@ -342,4 +349,12 @@ body,
 
 #userImageDiv span img{
   margin-right: 100px;
+}
+#userImageDiv span img:hover {
+  cursor: pointer;
+  border: 5px dashed;
+}
+
+#userNameDiv {
+  margin-top: 20%;
 }

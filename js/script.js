@@ -6,7 +6,9 @@ var sideEnemyW = 46;
 var sideEnemyH = 83;
 var leftEnemy;
 var life = 1000;
+var distance = 1000;
 var explodeTime = 0;
+var gameOver = false;
 
 // inner variables
 var canvas, ctx;
@@ -20,17 +22,13 @@ var sideEnemies = [];
 
 var dragonW = 100; // dragon width
 var dragonH = 100; // dragon height
-var iSprPos = 0; // initial sprite frame
-var iSprDir = 0; // initial dragon direction
 var iEnemyW = 128; // enemy width
 var iEnemyH = 128; // enemy height
 var iBallSpeed = 10; // initial ball speed
 var iEnemySpeed = 5; // initial enemy speed
 
 var dragonSound; // dragon sound
-var wingsSound; // wings sound
 var explodeSound, explodeSound2; // explode sounds
-var laughtSound; // wings sound
 
 var up = false;
 var down = false;
@@ -38,8 +36,6 @@ var right = false;
 var left = false;
 
 var bMouseDown = false; // mouse down state
-var iLastMouseX = 0;
-var iLastMouseY = 0;
 var iScore = 0;
 
 // -------------------------------------------------------------
@@ -81,33 +77,8 @@ function drawScene() { // main drawScene function
 
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // clear canvas
 
-    // draw background
-    iBgShiftX += 4;
-    if (iBgShiftX >= 1045) {
-        iBgShiftX = 0;
-    }
-    //ctx.drawImage(backgroundImage, 0 + iBgShiftX, 0, 2532/2, 940, 0, 0, 1000, 600);
-
-        // update sprite positions
-    iSprPos++;
-    if (iSprPos >= 9) {
-        iSprPos = 0;
-    }
-
     // in case of mouse down - move dragon more close to our mouse
     if (bMouseDown) {
-        /*if (iLastMouseX > dragon.x) {
-            dragon.x += 5;
-        }
-        if (iLastMouseY > dragon.y) {
-            dragon.y += 5;
-        }
-        if (iLastMouseX < dragon.x) {
-            dragon.x -= 5;
-        }
-        if (iLastMouseY < dragon.y) {
-            dragon.y -= 5;
-        }*/
         if(left) dragon.x -= 10;
         if(up) dragon.y -= 10;
         if(right) dragon.x += 10;
@@ -116,7 +87,6 @@ function drawScene() { // main drawScene function
     }
 
     // draw dragon
-    //ctx.drawImage(dragon.image, iSprPos*dragon.w, iSprDir*dragon.h, dragon.w, dragon.h, dragon.x - dragon.w/2, dragon.y - dragon.h/2, dragon.w, dragon.h);
     ctx.drawImage(dragon.image, dragon.x , dragon.y);
 
     // draw fireballs
@@ -176,42 +146,77 @@ function drawScene() { // main drawScene function
         hurt(sideEnemies);
     } else {
         gameStart = false;
+        gameOver = true;
     }
 
-    // draw score
-    ctx.font = '20px Verdana';
-    ctx.fillStyle = '#fff';
-    ctx.fillText('Score: ' + iScore * 10, 900, 580);
-    ctx.fillText('Life: ' + life, 100, 580);
-    //ctx.fillText('Plese click "1" to cast fireball', 100, 580);
+    $('#score').html('Score: ' + iScore * 10);
 }
 
 // -------------------------------------------------------------
 
 // initialization
 $(function(){
-    /*$('#startBtn').on('click', function(){
-        $('#playground').css('display', 'block');
-        $('#userInfo').css('display', 'none');
-        gameStart = true;
+    $('.modal-trigger').leanModal();
+    addRank();
+
+    $('#rankBtn').on('click', function(event){
+        if($(this).hasClass('disabled')) {
+            $('#rankModal').closeModal();
+        }
+    });
+    $('#restart').on('click', function(){
         start();
-    });*/
+    });
     $('#pauseBtn').on('click', function(){
         if(life > 0) gameStart = !gameStart;
+
+        if(gameStart) $('#rankBtn').addClass('disabled');
+        else $('#rankBtn').removeClass('disabled');
     });
     //testStart();
 });
 
 function start()
 {
+    life = 1000;
+    distance = 1000;
+    iScore = 0;
+    gameStart = true;
+    gameOver = false;
+    $('#lifeProgressBar').width('100%').html('100%');
+    $('#score').html('Score: 0');
+    $('#distance').html('1000km');
+    $('#rankModal').closeModal();
+    for (var i = 1; i < 99999; i++)
+        window.clearInterval(i);
+
+    deleteOBJ(enemies);
+    deleteOBJ(sideEnemies);
+    deleteOBJ(balls);
+
     canvas = document.getElementById('scene');
     ctx = canvas.getContext('2d');
     canvas.width  = 1920;
     canvas.height = 600;
 
     // 'Dragon' music init
+    if(dragonSound) {
+        dragonSound.pause();
+        dragonSound.currentTime = 0;
+        delete(dragonSound);
+    }
     dragonSound = new Audio('media/dragon.wav');
     dragonSound.volume = 0.9;
+    dragonSound.addEventListener('ended', function() { // loop wings sound
+        this.pause();
+        this.currentTime = 0;
+        this.play();
+    }, false);
+    dragonSound.pause();
+    dragonSound.currentTime = 0;
+    dragonSound.play();
+
+
 
     // 'Explode' music inits
     explodeSound = new Audio('media/explode1.wav');
@@ -265,25 +270,6 @@ function start()
         dragon = new Dragon(400, 300, dragonW, dragonH, oDragonImage);
     }
 
-    /*$('#scene').mousedown(function(e) { // binding mousedown event (for dragging)
-     var mouseX = e.layerX || 0;
-     var mouseY = e.layerY || 0;
-     if(e.originalEvent.layerX) { // changes for jquery 1.7
-     mouseX = e.originalEvent.layerX;
-     mouseY = e.originalEvent.layerY;
-     }
-
-     bMouseDown = true;
-
-     if (mouseX > dragon.x- dragon.w/2 && mouseX < dragon.x- dragon.w/2 +dragon.w &&
-     mouseY > dragon.y- dragon.h/2 && mouseY < dragon.y-dragon.h/2 +dragon.h) {
-
-     dragon.bDrag = true;
-     dragon.x = mouseX;
-     dragon.y = mouseY;
-     }
-     });*/
-
     $(window).keydown(function(e) {
         bMouseDown = true;
         switch(e.keyCode)
@@ -306,43 +292,6 @@ function start()
         }
     });
 
-    /*$('#scene').mousemove(function(e) { // binding mousemove event
-     var mouseX = e.layerX || 0;
-     var mouseY = e.layerY || 0;
-     if(e.originalEvent.layerX) {
-     mouseX = e.originalEvent.layerX;
-     mouseY = e.originalEvent.layerY;
-     }
-
-     // saving last coordinates
-     iLastMouseX = mouseX;
-     iLastMouseY = mouseY;
-
-     // perform dragon dragging
-     if (dragon.bDrag) {
-     dragon.x = mouseX;
-     dragon.y = mouseY;
-     }
-
-     // change direction of dragon (depends on mouse position)
-     if (mouseX > dragon.x && Math.abs(mouseY-dragon.y) < dragon.w/2) {
-     iSprDir = 0;
-     } else if (mouseX < dragon.x && Math.abs(mouseY-dragon.y) < dragon.w/2) {
-     iSprDir = 4;
-     } else if (mouseY > dragon.y && Math.abs(mouseX-dragon.x) < dragon.h/2) {
-     iSprDir = 2;
-     } else if (mouseY < dragon.y && Math.abs(mouseX-dragon.x) < dragon.h/2) {
-     iSprDir = 6;
-     } else if (mouseY < dragon.y && mouseX < dragon.x) {
-     iSprDir = 5;
-     } else if (mouseY < dragon.y && mouseX > dragon.x) {
-     iSprDir = 7;
-     } else if (mouseY > dragon.y && mouseX < dragon.x) {
-     iSprDir = 3;
-     } else if (mouseY > dragon.y && mouseX > dragon.x) {
-     iSprDir = 1;
-     }
-     });*/
     $(window).keyup(function(e) {
         bMouseDown = false;
         switch(e.keyCode)
@@ -364,23 +313,11 @@ function start()
                 break;
         }
 
-        // play dragon sound
-        /*dragonSound.currentTime = 0;
-        dragonSound.play();*/
     });
-
-    /*$('#scene').mouseup(function(e) { // binding mouseup event
-     dragon.bDrag = false;
-     bMouseDown = false;
-
-     // play dragon sound
-     dragonSound.currentTime = 0;
-     dragonSound.play();
-     });*/
 
     $(window).keydown(function(event){ // keyboard alerts
         switch (event.keyCode) {
-            case 49: // '1' key
+            case 70: // 'f' key
                 balls.push(new Ball(dragon.x + 100, dragon.y + 50, 32, 32, iBallSpeed, oBallImage));
 
                 // play explode sound #1
@@ -410,11 +347,59 @@ function start()
         }
     });
 
-    setInterval(drawScene, 20); // loop drawScene
+    setInterval(function() {
+        if(!gameOver) return;
+        gameOver = false;
+        if(!localStorage.rank1Score) {
+            localStorage.rank1Score = iScore * 10;
+            localStorage.rank1Name = userName;
+        } else if(iScore * 10 > localStorage.rank1Score ) {
+            localStorage.rank3Score = localStorage.rank2Score;
+            localStorage.rank3Name = localStorage.rank2Name;
+
+            localStorage.rank2Score = localStorage.rank1Score;
+            localStorage.rank2Name = localStorage.rank1Name;
+
+            localStorage.rank1Score = iScore * 10;
+            localStorage.rank1Name = userName;
+        } else if(!localStorage.rank2Score) {
+            localStorage.rank2Score = iScore * 10;
+            localStorage.rank2Name = userName;
+        } else if(iScore * 10 > localStorage.rank2Score || localStorage.rank2Score == 0 || !localStorage.rank2Score) {
+            localStorage.rank3Score = localStorage.rank2Score;
+            localStorage.rank3Name = localStorage.rank2Name;
+
+            localStorage.rank2Score = iScore * 10;
+            localStorage.rank2Name = userName;
+        } else if(!localStorage.rank3Score) {
+            localStorage.rank3Score = iScore * 10;
+            localStorage.rank3Name = userName;
+        } else if(iScore * 10 > localStorage.rank3Score || localStorage.rank3Score == 0 || !localStorage.rank3Score) {
+            localStorage.rank3Score = iScore * 10;
+            localStorage.rank3Name = userName;
+        }
+        addRank();
+        $('#rankModal .modal-content h1').html(userName + ' scores ' + iScore * 10 + ' points.');
+        $('#rankModal').openModal();
+    }, 1000); //draw distance
+
+    setInterval(function() {
+        if(!gameStart) return;
+        distance -= 10;
+        if(distance < 0) {
+            gameStart = false;
+            gameOver = true;
+            return;
+        }
+        $('#distance').html(distance + 'km');
+    }, 1000); //draw distance
+
+    setInterval(drawScene, 20);
 
     // generate enemies randomly
     var enTimer = null;
     function addEnemy() {
+        if(!gameStart) return;
         clearInterval(enTimer);
         var randY = getRand(0, canvas.height - iEnemyH);
         enemies.push(new Enemy(canvas.width, randY, iEnemyW, iEnemyH, - iEnemySpeed, defaultEnemy));
@@ -466,5 +451,33 @@ function hurt(enemies)
                 explodeTime = 7;
             }
         }
+    }
+}
+
+function deleteOBJ(who)
+{
+    for (var key in who) {
+        delete who[key];
+    }
+}
+
+function addRank()
+{
+    var modal = $('#rankModal .modal-content .row');
+    modal.empty().append('<h4><span class="col s4">Rank</span><span class="col s4">Name</span><span class="col s4">Score</span></h4>');
+    if(!localStorage.rank1Name) {
+        modal.append('<h4><span class="col s4">1</span><span class="col s4">XXXXX</span><span class="col s4">0</span></h4>');
+    } else {
+        modal.append('<h4><span class="col s4">1</span><span class="col s4">'+localStorage.rank1Name+'</span><span class="col s4">'+localStorage.rank1Score+'</span></h4>');
+    }
+    if(!localStorage.rank2Name) {
+        modal.append('<h4><span class="col s4">2</span><span class="col s4">XXXXX</span><span class="col s4">0</span></h4>');
+    } else {
+        modal.append('<h4><span class="col s4">2</span><span class="col s4">'+localStorage.rank2Name+'</span><span class="col s4">'+localStorage.rank2Score+'</span></h4>');
+    }
+    if(!localStorage.rank3Name) {
+        modal.append('<h4><span class="col s4">3</span><span class="col s4">XXXXX</span><span class="col s4">0</span></h4>');
+    } else {
+        modal.append('<h4><span class="col s4">3</span><span class="col s4">'+localStorage.rank3Name+'</span><span class="col s4">'+localStorage.rank3Score+'</span></h4>');
     }
 }
