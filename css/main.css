@@ -46,7 +46,7 @@ header .stuts span {
     margin-left:5px;
 }
 #scene {
-    margin-top: 70px;
+    margin-top: 0px;
     display: block;
     position: relative;
     width: 1920px;
@@ -68,6 +68,9 @@ header .stuts span {
 #userActionDiv #score {
     margin: 0 0 0 50px;
     color: #E4FDE1;
+}
+#userActionDiv #distance {
+    margin: 0;
 }
 #userActionDiv #pauseBtn {
     right: 50px;
@@ -119,7 +122,3 @@ header .stuts span {
     transition: width .6s ease;
 }
 
-
-#rankModal .modal-content{
-
-}

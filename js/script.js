@@ -24,8 +24,8 @@ var dragonW = 100; // dragon width
 var dragonH = 100; // dragon height
 var iEnemyW = 128; // enemy width
 var iEnemyH = 128; // enemy height
-var iBallSpeed = 10; // initial ball speed
-var iEnemySpeed = 5; // initial enemy speed
+var iBallSpeed = 10/2; // initial ball speed
+var iEnemySpeed = 5/2; // initial enemy speed
 
 var dragonSound; // dragon sound
 var explodeSound, explodeSound2; // explode sounds
@@ -183,6 +183,8 @@ function start()
     iScore = 0;
     gameStart = true;
     gameOver = false;
+    $('#rankBtn').addClass('disabled');
+    $('#lifeProgressBarDiv h2').html('Life: 1000/1000');
     $('#lifeProgressBar').width('100%').html('100%');
     $('#score').html('Score: 0');
     $('#distance').html('1000km');
@@ -205,7 +207,7 @@ function start()
         dragonSound.currentTime = 0;
         delete(dragonSound);
     }
-    dragonSound = new Audio('media/dragon.wav');
+    dragonSound = new Audio('http://dmplus.cs.ccu.edu.tw/~s402410052/canvas/media/dragon.wav');
     dragonSound.volume = 0.9;
     dragonSound.addEventListener('ended', function() { // loop wings sound
         this.pause();
@@ -219,9 +221,9 @@ function start()
 
 
     // 'Explode' music inits
-    explodeSound = new Audio('media/explode1.wav');
+    explodeSound = new Audio('http://dmplus.cs.ccu.edu.tw/~s402410052/canvas/media/explode1.wav');
     explodeSound.volume = 0.9;
-    explodeSound2 = new Audio('media/explosion.wav');
+    explodeSound2 = new Audio('http://dmplus.cs.ccu.edu.tw/~s402410052/canvas/media/explosion.wav');
     explodeSound2.volume = 0.9;
 
     // 'Wings' music init
@@ -235,29 +237,29 @@ function start()
 
     // initialization of empty ball
     var oBallImage = new Image();
-    oBallImage.src = 'images/fireball.png';
+    oBallImage.src = 'http://dmplus.cs.ccu.edu.tw/~s402410052/canvas/images/fireball.png';
     oBallImage.onload = function() { }
 
     // initialization of empty enemy
     defaultEnemy = new Image();
-    defaultEnemy.src = 'images/default_enemy.png';
+    defaultEnemy.src = 'http://dmplus.cs.ccu.edu.tw/~s402410052/canvas/images/default_enemy.png';
     defaultEnemy.onload = function() { }
     //default enemy
     DRAW();
 
     // initialization of right empty enemy
     rightEnemy = new Image();
-    rightEnemy.src = 'images/right_enemy.png';
+    rightEnemy.src = 'http://dmplus.cs.ccu.edu.tw/~s402410052/canvas/images/right_enemy.png';
     rightEnemy.onload = function() { }
 
     // initialization of left empty enemy
     leftEnemy = new Image();
-    leftEnemy.src = 'images/left_enemy.png';
+    leftEnemy.src = 'http://dmplus.cs.ccu.edu.tw/~s402410052/canvas/images/left_enemy.png';
     leftEnemy.onload = function() { }
 
     //explode image
     explosion = new Image();
-    explosion.src = 'images/explosion.png';
+    explosion.src = 'http://dmplus.cs.ccu.edu.tw/~s402410052/canvas/images/explosion.png';
     explosion.onload = function() { }
 
     // initialization of dragon
@@ -394,7 +396,7 @@ function start()
         $('#distance').html(distance + 'km');
     }, 1000); //draw distance
 
-    setInterval(drawScene, 20);
+    setInterval(drawScene, 10);
 
     // generate enemies randomly
     var enTimer = null;
